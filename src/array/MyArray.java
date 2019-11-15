@@ -7,7 +7,7 @@ import java.util.Arrays;
 
 public class MyArray<E> {
     private E[] data;
-    int size;
+    private int size;
 
     public MyArray(int initialCapacity) {
         data = (E[]) new Object[initialCapacity];
@@ -45,6 +45,15 @@ public class MyArray<E> {
             throw new IllegalArgumentException("索引不在数组长度内");
         }
         return data[index];
+    }
+
+    public int find(E e){
+        for(int i = 0; i < size;i ++) {
+            if(data[i].equals(e)){
+                return i;
+            }
+        }
+        return -1;
     }
 
     public void set(int index, E e) {
@@ -90,6 +99,6 @@ public class MyArray<E> {
         myArray.add(0,"22");
         myArray.add(0,"222");
         System.out.println(myArray.remove(0));
-        System.out.println(myArray);
+        System.out.println(myArray.find("322"));
     }
 }
