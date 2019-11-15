@@ -195,3 +195,117 @@ public class LoopQueue<E> implements Queue<E> {
 }
 
 ```
+
+## 2.3链表队列（LinkedListQueue）
+由于链表对头操作比较容易，对尾操作比较复杂，所以普通的链表做队列的话入队或出队会耗费一定的时间，所以我们同数组一样，在链表中设置一个尾节点，指向当前链表的尾部。当队列为空的时候，head = tail = null。由于链表是一种真正的动态结构（数组的扩容其实也是静态的，底层是我们不断新建大容量数组的替换），不会浪费空间。
+
+```
+public class LinkedListQueue<E> implements Queue<E> {
+    private class Node{
+        public E e;
+        public Node next;
+
+        public Node(E e,Node next){
+            this.e = e;
+            this.next = next;
+        }
+
+        public Node(E e){
+            this(e,null);
+        }
+
+        public Node(){
+            this(null,null);
+        }
+
+        @Override
+        public String toString(){
+            return e.toString();
+        }
+
+    }
+    private Node head,tail;
+    private int size;
+    public LinkedListQueue(){
+        head = null;
+        tail = null;
+        size = 0;
+    }
+
+    @Override
+    public int getSize(){
+        return size;
+    }
+
+    @Override
+    public boolean isEmpty(){
+        return size == 0 ;
+    }
+
+    @Override
+    public void enqueue(E e){
+        if(tail == null){
+            Node node = new Node(e);
+            tail = node;
+            head = tail;
+        }else{
+            tail.next = new Node(e);
+            tail = tail.next;
+        }
+        size++;
+    }
+
+    @Override
+    public E dequeue(){
+        if(isEmpty()){
+            throw new IllegalArgumentException("Cannot dequeue from an empty queue");
+        }
+
+        Node retNode = head ;
+        head = head.next;
+        retNode.next = null;
+        if(head == null){
+            tail = null;
+        }
+        size -- ;
+        return retNode.e;
+    }
+
+    @Override
+    public E getFront(){
+        if(isEmpty()){
+            throw new IllegalArgumentException("Queue is empty");
+        }
+        return head.e;
+    }
+
+    @Override
+    public String toString(){
+        StringBuilder res = new StringBuilder();
+        res.append("Queue : front ");
+        Node cur = head;
+        while(cur!=null){
+            res.append(cur + "->");
+            cur = cur.next;
+        }
+        res.append("NULL tail");
+        return res.toString();
+    }
+
+    public static void main(String[] args) {
+
+        LinkedListQueue<Integer> arr = new LinkedListQueue<>();
+        for(int i = 0 ; i<10 ; i++){
+            arr.enqueue(i);
+            System.out.println(arr);
+            if(i % 3 == 2){
+                arr.dequeue();
+                System.out.println(arr);
+            }
+        }
+
+
+    }
+}
+
+```
