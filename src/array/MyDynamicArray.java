@@ -16,12 +16,28 @@ public class MyDynamicArray<E> {
         this(10);
     }
 
+    public boolean isEmpty(){
+        return size == 0 ;
+    }
+
     public int getSize() {
         return size;
     }
 
     public int getCapacity() {
         return data.length;
+    }
+
+    public void addLast(E e){
+        add(size,e);
+    }
+
+    public E removeLast(){
+        return remove(size-1);
+    }
+
+    public E getLast(){
+        return get(size-1);
     }
 
     public void add(int index, E e) {
