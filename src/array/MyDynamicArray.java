@@ -36,8 +36,17 @@ public class MyDynamicArray<E> {
         return remove(size-1);
     }
 
+    public E removeFirst(){
+        return remove(0);
+    }
+
+
+
     public E getLast(){
         return get(size-1);
+    }
+    public E getFirst(){
+        return get(0);
     }
 
     public void add(int index, E e) {
